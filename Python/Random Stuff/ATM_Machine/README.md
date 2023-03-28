@@ -16,4 +16,4 @@
 >- The pin is hardcoded could make a sign-up/login system with hashing and decryption. (Added onto that I could create a simulated server so that nothing "sensitive" would be anywhere near possible attackers.)
 >- Formatting and Making everything look better.
 >- Exception Handling and Bug Testing
->- Add a "Wrong Password Prompt"
+
