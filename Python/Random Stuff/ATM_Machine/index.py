@@ -39,14 +39,15 @@ def load_object(filename):
 
 pin = "123"
 pin_answer = input("Please input your pin: ")
-
+# Checks to see if the pin being used to login is correct
 if pin == pin_answer:
+    # Starts loading bar
     for _ in track(range(100), description='[green]Starting ATM'):
         pretty.install()
         console = Console()
         sleep(0.02)
     special_characters=['!','@','#','$','%','^','&','*','(',')','-','=','+','-']
-   
+   # Start of ATM Loop
     while 1: 
         obj = load_object("data.pickle")
         clear_screen()
@@ -60,12 +61,16 @@ if pin == pin_answer:
             clear_screen()
             console.print("How much would you like to deposit (Number only)")
             deposit = input("Amount to deposit: ")
+            # Removes any special characters from answer to avoid exploits/errors
             for i in special_characters:
                 checked = deposit.replace(i,"")
             new_balance = obj.balance + int(checked)
             console.print("Your new balance is ${}".format(str(new_balance)))
+            # Updates Balance in stored file
             obj.set_balance(new_balance)
+            # Adds history to file
             obj.add_history("Deposit {}".format(str(checked)))
+            # Saves all updated information to file
             save_object(obj)
             input("Press Enter to go back to main menu.")
         
@@ -88,20 +93,20 @@ if pin == pin_answer:
             table.add_column("Action", justify="right", style="cyan", no_wrap=True)
             table.add_column("Amount", justify="right", style="green", no_wrap=True)
             last_transactions = obj.last_transaction
-            for x in last_transactions:
-                s1 = x.split(" ")[0]
+            for x in last_transactions: # Breaks format "<ACTION> <AMOUNT> into an array."
+                s1 = x.split(" ")[0] 
                 s2 = x.split(" ")[1]
-                table.add_row(s1, "${}".format(s2))
+                table.add_row(s1, "${}".format(s2)) # Adds row to table for history from array
             console.print(table)
             input("Press Enter to go back to main menu.")
-        elif user_input == "exit":
+        elif user_input == "exit": # Exit Message
             console.print("Thank you for banking with us.")
             sleep(0.05)
             break
         else:
             print("Type \"exit\" to exit.")
             sleep(0.05)
-
-   
-
-
+elif pin != pin_answer:
+    print("Wrong Password!")
+else:
+    print("A Problem Occured.")
